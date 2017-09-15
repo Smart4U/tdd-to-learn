@@ -1,0 +1,28 @@
+{
+    "name": "smart4u/tdd-to-learn",
+    "description": "learn tdd by the practice",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Smart4U",
+            "email": "email4webdev@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "filp/whoops": "^2.1",
+        "symfony/dotenv": "^4.0@dev"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.0",
+        "phpunit/phpunit": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tests\\": "tests",
+            "Core\\": "src/Core",
+            "Bundles\\": "src/Bundles"
+        }
+    }
+}
+
