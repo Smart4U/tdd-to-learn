@@ -11,7 +11,11 @@
     "require": {
         "php": "^7.1",
         "filp/whoops": "^2.1",
-        "symfony/dotenv": "^4.0@dev"
+        "symfony/dotenv": "^4.0@dev",
+        "guzzlehttp/guzzle": "^6.2@dev",
+        "http-interop/response-sender": "dev-master",
+        "zendframework/zend-expressive-fastroute": "^2.1@dev"
+
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.0",

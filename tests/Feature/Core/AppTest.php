@@ -3,6 +3,8 @@
 namespace Tests\Feature\Core;
 
 use Core\App;
+use GuzzleHttp\Psr7\Response;
+
 use PHPUnit\Framework\TestCase;
 
 class AppTest extends TestCase
@@ -16,7 +18,8 @@ class AppTest extends TestCase
     }
 
     public function testRunReturnResponse(){
-        $this->assertEquals($this->app->run(), 'app loaded...');
+        $this->assertInstanceOf(App::class, $this->app);
+        $this->assertInstanceOf(Response::class, $this->app->run());
     }
 
 }
