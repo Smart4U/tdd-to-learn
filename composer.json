@@ -15,7 +15,8 @@
         "guzzlehttp/guzzle": "^6.2@dev",
         "http-interop/response-sender": "dev-master",
         "zendframework/zend-expressive-fastroute": "^2.1@dev",
-        "php-di/php-di": "^5.4"
+        "php-di/php-di": "^5.4",
+        "twig/twig": "^2.4"
 
     },
     "require-dev": {

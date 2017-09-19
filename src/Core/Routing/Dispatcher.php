@@ -3,8 +3,10 @@
 namespace Core\Routing;
 
 use GuzzleHttp\Psr7\Response;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Expressive\Router\RouteResult;
+use Core\Controller\ErrorHandlerController;
 
 /**
  * Calls the method that matches the current query
@@ -13,6 +15,13 @@ use Zend\Expressive\Router\RouteResult;
  */
 class Dispatcher
 {
+
+    private $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
 
     /**
      * @param RouteResult $routeResult
@@ -40,23 +49,38 @@ class Dispatcher
     private function found(RouteResult $routeResult): ResponseInterface
     {
         $route = new Route($routeResult->getMatchedRouteName(), $routeResult->getMatchedMiddleware(), $routeResult->getMatchedParams());
-        return new Response(200, [], (string)call_user_func_array($route->handler(), $route->params()));
+        [$controller, $action] = $route->handler();
+        $handlerResponse = $this->container->get($controller)->$action();
+        return new Response(200, [], $handlerResponse);
     }
-
 
     /**
      * @return ResponseInterface
+     * @throws BadMethodRouterException
      */
     private function badMethod(): ResponseInterface
     {
-        return new Response(405, [], 'Bad Method;)');
+        if ($this->container->has('app')) {
+            if (isset($this->container->get('app')['app.debug']) && $this->container->get('app')['app.debug']) {
+                throw new BadMethodRouterException('Method does not allowed.');
+            }
+        }
+        $handlerResponse = $this->container->get(ErrorHandlerController::class)->errorMethodHandlerAction();
+        return new Response(405, [], $handlerResponse);
     }
 
     /**
      * @return ResponseInterface
+     * @throws BadRouteException
      */
     private function noFound(): ResponseInterface
     {
-        return new Response(404, [], 'Not Found;)');
+        if ($this->container->has('app')) {
+            if (isset($this->container->get('app')['app.debug']) && $this->container->get('app')['app.debug']) {
+                throw new BadRouteException('Cannot resolve this route.');
+            }
+        }
+        $handlerResponse = $this->container->get(ErrorHandlerController::class)->errorNotFoundHandlerAction();
+        return new Response(404, [], $handlerResponse);
     }
 }

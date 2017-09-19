@@ -2,11 +2,13 @@
 
 namespace Bundles\Contact\Controllers;
 
+use Core\Controller\Controller;
+
 /**
  * Class ContactController
  * @package Bundles\Contact\Controllers
  */
-class ContactController
+class ContactController extends Controller
 {
 
     /**
@@ -14,6 +16,6 @@ class ContactController
      */
     public function indexAction() :string
     {
-        return 'contact page';
+        return $this->view->render('contact/index');
     }
 }

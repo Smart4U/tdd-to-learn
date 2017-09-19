@@ -24,7 +24,6 @@ class ContactBundle extends Bundle
     public function __construct(Router $router)
     {
         parent::__construct($router);
-
         $this->setRoutesBundle();
     }
 
