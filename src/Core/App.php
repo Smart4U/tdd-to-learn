@@ -5,6 +5,7 @@ namespace Core;
 use Core\Routing\Router;
 use Core\Routing\Dispatcher;
 use GuzzleHttp\Psr7\ServerRequest;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -14,21 +15,36 @@ use Psr\Http\Message\ResponseInterface;
 class App
 {
 
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+    /**
+     * @var Router|mixed
+     */
     private $router;
+    /**
+     * @var Dispatcher|mixed
+     */
     private $dispatcher;
+    /**
+     * @var array
+     */
     private $bundles = [];
 
 
     /**
      * App constructor.
-     * @param array $bundles
+     * @param ContainerInterface $container
      */
-    public function __construct(array $bundles)
+    public function __construct(ContainerInterface $container)
     {
-        $this->router = new Router();
-        $this->dispatcher = new Dispatcher();
-        foreach ($bundles as $bundle) {
-            $this->bundles[] = new $bundle($this->router);
+        $this->container = $container;
+        $this->router = $this->container->get(Router::class);
+        $this->dispatcher = $this->container->get(Dispatcher::class);
+
+        foreach ($container->get('bundles') as $bundle) {
+            $this->bundles[] = $this->container->get($bundle);
         }
     }
 
@@ -38,9 +54,8 @@ class App
      */
     public function run() :ResponseInterface
     {
-        $request = ServerRequest::fromGlobals();
         return $this->dispatcher->dispatch(
-            $this->router->match($request)
+            $this->router->match(ServerRequest::fromGlobals())
         );
     }
 }

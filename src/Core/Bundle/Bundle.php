@@ -16,7 +16,7 @@ abstract class Bundle
     /**
      * @var string
      */
-    private $name;
+    protected $name;
     /**
      * @var Router
      */
@@ -24,7 +24,7 @@ abstract class Bundle
     /**
      * @var array
      */
-    private $settings = [];
+    protected $settings = [];
 
     /**
      * Bundle constructor.

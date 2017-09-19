@@ -2,4 +2,6 @@
 
 return [
 
+    'test' => 'aaa'
+
 ];

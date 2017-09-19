@@ -2,10 +2,10 @@
 
 use function Http\Response\send;
 
-require dirname(__DIR__) . '/bootstrap.php';
+$container = require dirname(__DIR__) . '/bootstrap.php';
 
 $bundles = require ROOT . 'bundles.php';
 
-$app = new \Core\App($bundles);
+$app = new \Core\App($container);
 
 send($app->run());

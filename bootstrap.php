@@ -26,3 +26,10 @@ $whoops->register();
 $env = new Symfony\Component\Dotenv\Dotenv();
 $env->load(ROOT.'.env');
 
+/**
+ * Dependency injection container
+ */
+$kernel = require ROOT . 'kernel.php';
+$builder = new \DI\ContainerBuilder();
+$builder->addDefinitions($kernel);
+return $builder->build();

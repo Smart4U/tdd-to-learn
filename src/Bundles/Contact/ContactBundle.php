@@ -9,7 +9,7 @@ use Core\Routing\Router;
 use Bundles\Contact\Controllers\ContactController;
 
 /**
- * Class ContactBundle
+ * Class TestBundle
  * @package Bundles\Contact
  */
 class ContactBundle extends Bundle
@@ -18,7 +18,7 @@ class ContactBundle extends Bundle
     const BUNDLE_SETTINGS = __DIR__ . '/settings.php';
 
     /**
-     * ContactBundle constructor.
+     * TestBundle constructor.
      * @param Router $router
      */
     public function __construct(Router $router)
