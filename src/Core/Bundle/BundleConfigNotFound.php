@@ -1,13 +1,14 @@
 <?php
 
-namespace Core\Routing;
+namespace Core\Bundle;
 
 /**
- * Class BadRouteException
- * @package Core\Routing
+ * Class BundleConfigNotFound
+ * @package Core\Bundle
  */
-class BadRouteException extends \Exception
+class BundleConfigNotFound extends \Exception
 {
+
     public function __construct($message = "", $code = 0, \Throwable $previous = null)
     {
         parent::__construct($message, 404, $previous);

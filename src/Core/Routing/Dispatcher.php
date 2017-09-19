@@ -3,6 +3,7 @@
 namespace Core\Routing;
 
 use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 use Zend\Expressive\Router\RouteResult;
 
 /**
@@ -15,9 +16,9 @@ class Dispatcher
 
     /**
      * @param RouteResult $routeResult
-     * @return Response
+     * @return ResponseInterface
      */
-    public function dispatch(RouteResult $routeResult): Response
+    public function dispatch(RouteResult $routeResult): ResponseInterface
     {
 
         if ($routeResult->isSuccess()) {
@@ -25,36 +26,36 @@ class Dispatcher
         }
 
         if ($routeResult->isMethodFailure()) {
-            return $this->badMethod($routeResult);
+            return $this->badMethod();
         }
 
-        return $this->noFound($routeResult);
+        return $this->noFound();
     }
+
 
     /**
      * @param RouteResult $routeResult
-     * @return Response
+     * @return ResponseInterface
      */
-    private function found(RouteResult $routeResult): Response
+    private function found(RouteResult $routeResult): ResponseInterface
     {
         $route = new Route($routeResult->getMatchedRouteName(), $routeResult->getMatchedMiddleware(), $routeResult->getMatchedParams());
-        return new Response(200, [], call_user_func_array($route->handler(), $route->params()));
+        return new Response(200, [], (string)call_user_func_array($route->handler(), $route->params()));
     }
 
+
     /**
-     * @param RouteResult $routeResult
-     * @return Response
+     * @return ResponseInterface
      */
-    private function badMethod(RouteResult $routeResult): Response
+    private function badMethod(): ResponseInterface
     {
         return new Response(405, [], 'Bad Method;)');
     }
 
     /**
-     * @param RouteResult $routeResult
-     * @return Response
+     * @return ResponseInterface
      */
-    private function noFound(RouteResult $routeResult): Response
+    private function noFound(): ResponseInterface
     {
         return new Response(404, [], 'Not Found;)');
     }

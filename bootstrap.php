@@ -23,6 +23,6 @@ $whoops->register();
 /**
  * Symfony Dotenv
  */
-$dotenv = new Symfony\Component\Dotenv\Dotenv();
-$dotenv->load(ROOT.'.env');
+$env = new Symfony\Component\Dotenv\Dotenv();
+$env->load(ROOT.'.env');
 

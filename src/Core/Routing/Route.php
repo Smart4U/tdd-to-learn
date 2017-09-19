@@ -24,7 +24,12 @@ class Route
     private $params = [];
 
 
-
+    /**
+     * Route constructor.
+     * @param string $name
+     * @param callable $handler
+     * @param array $params
+     */
     public function __construct(string $name, callable $handler, array $params)
     {
         $this->name = $name;
